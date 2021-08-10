@@ -6,7 +6,6 @@ const UserSchema = require("../schema/User");
 
 const TeamAPI = {
   CreateTeam: Joi.object({
-    user_id: Joi.string().required(),
     name: Joi.string().required(),
     department: Joi.any()
       .valid(...DepartmentInfo["list"])

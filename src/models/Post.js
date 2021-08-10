@@ -19,7 +19,7 @@ Post.prototype.Create = async function (PostObj) {
       TAG,
       `Adiminister (${this.token.adim}) has no access to ${TAG}.`
     );
-    return exception.PermissionError("Permission Deny", "have no access");
+    throw exception.PermissionError("Permission Deny", "have no access");
   }
   const validate = await PostAPI.CreatePost.validate(PostObj);
   if (validate.error) {

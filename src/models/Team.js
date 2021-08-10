@@ -4,8 +4,6 @@ const Logger = require("../modules/logger");
 const TeamSchema = require("../schema/Team");
 const config = require("../config");
 
-const { models } = require("mongoose");
-
 class Team {
   constructor(token) {
     this.token = token;

@@ -6,6 +6,13 @@
 
 It's design for National Taiwan University's basketball contest website. This repository is for the website's backend service, including login/log out, account, matches and teams information's create, update, delete and query services.
 
+### Commands
+
+```
+npm install     // install all required modules in package.json
+npm run server  // run server in localhost:4000
+```
+
 ### Design Tools
 
 - Database: [mongodb]
