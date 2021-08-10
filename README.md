@@ -9,7 +9,7 @@ It's design for National Taiwan University's basketball contest website. This re
 ### Design Tools
 
 - Database: [mongodb]
-- NodeJs:
+- javascript:
   - [express]: Router for request
   - [mongoose]: Mongodb's database interactive module
   - [nodemailer]: Email service
@@ -87,7 +87,7 @@ It's design for National Taiwan University's basketball contest website. This re
 
 ### Authorization
 
-```=javascript
+```javascript
 const whiteList = [
   { url: "/users/login", method: "PUT" },
   { url: "/users/remind", method: "PUT" },
@@ -132,7 +132,7 @@ function doAuthAction(req, resp, next) {
 
 ./src/schema/Test.js
 
-```=nodejs
+```javascript
 const mongoose = require("mongoose");
 const moment = require("moment-timezone");
 const Schema = mongoose.Schema;
@@ -166,7 +166,7 @@ module.exports = Test;
 
 ./src/joi/test.js
 
-```=nodejs
+```=javascript
 const Joi = require("joi");
 const TestSchema = require("../schema/Team");
 
@@ -221,7 +221,7 @@ module.exports.TestValider = TestValider;
 
 ./src/models/Test.js
 
-```=nodejs
+```=javascript
 const exception = require("../modules/exception");
 const { TestAPI, TestValider } = require("../joi/Test");
 const Logger = require("../modules/logger");
@@ -328,7 +328,7 @@ module.exports = Test;
 
 ./src/contrllers/test.js
 
-```=nodejs
+```=javascript
 const express = require("express");
 const response = require("../modules/response");
 const Test = require("../models/Test");
@@ -386,7 +386,7 @@ Add the new API structure to index.js
 
 ./src/controllers/index.js
 
-```=nodejs
+```=javascript
 const express = require("express");
 const router = express.Router();
 const aurthor = require("./authorization");
