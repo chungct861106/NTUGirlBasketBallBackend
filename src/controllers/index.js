@@ -1,0 +1,10 @@
+const express = require("express");
+const router = express.Router();
+const aurthor = require("./authorization");
+router.use("*", aurthor.doAuthAction);
+router.use("/users", require("./user"));
+router.use("/posts", require("./post"));
+router.use("/teams", require("./team"));
+router.use("/matches", require("./match"));
+router.use("/players", require("./player"));
+module.exports = router;
