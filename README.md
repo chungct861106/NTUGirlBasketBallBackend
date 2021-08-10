@@ -81,16 +81,11 @@ npm run server  // run server in localhost:4000
 └── yarn.lock
 ```
 
-- contorllers
-  Handle request and route to models
-- joi
-  Validations for each API request parameters
-- models
-  Handle API logic and interact with database
-- schema
-  Database table structure design.
-- views
-  Invalid API request view
+- contorllers: Handle request and route to models
+- joi: Validations for each API request parameters
+- models: Handle API logic and interact with database
+- schema: Database table structure design.
+- views: Invalid API request view
 
 ### Authorization
 
