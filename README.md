@@ -166,7 +166,7 @@ module.exports = Test;
 
 ./src/joi/test.js
 
-```=javascript
+```javascript
 const Joi = require("joi");
 const TestSchema = require("../schema/Team");
 
@@ -213,7 +213,6 @@ const TestValider = {
 
 module.exports.TestAPI = TestAPI;
 module.exports.TestValider = TestValider;
-
 ```
 
 - Step 3: Model
@@ -221,7 +220,7 @@ module.exports.TestValider = TestValider;
 
 ./src/models/Test.js
 
-```=javascript
+```javascript
 const exception = require("../modules/exception");
 const { TestAPI, TestValider } = require("../joi/Test");
 const Logger = require("../modules/logger");
@@ -328,7 +327,7 @@ module.exports = Test;
 
 ./src/contrllers/test.js
 
-```=javascript
+```javascript
 const express = require("express");
 const response = require("../modules/response");
 const Test = require("../models/Test");
@@ -379,14 +378,13 @@ router.delete("/delete", async (req, res) => {
   }
 });
 module.exports = router;
-
 ```
 
 Add the new API structure to index.js
 
 ./src/controllers/index.js
 
-```=javascript
+```javascript
 const express = require("express");
 const router = express.Router();
 const aurthor = require("./authorization");
@@ -398,7 +396,6 @@ router.use("/matches", require("./match"));
 router.use("/players", require("./player"));
 router.use("/tests", require("./test")); // add this line
 module.exports = router;
-
 ```
 
 Now You can use any request test to test your new API. EX: [Postman], [Thunder]
