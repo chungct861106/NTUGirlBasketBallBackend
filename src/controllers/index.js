@@ -7,4 +7,5 @@ router.use("/posts", require("./post"));
 router.use("/teams", require("./team"));
 router.use("/matches", require("./match"));
 router.use("/players", require("./player"));
+router.use("/tests", require("./test"));
 module.exports = router;

@@ -5,7 +5,6 @@ const Logger = require("../modules/logger");
 const exception = require("../modules/exception");
 const response = require("../modules/response");
 const tool = require("../modules/tool");
-const fs = require("fs");
 
 const whiteList = [
   { url: "/users/login", method: "PUT" },
