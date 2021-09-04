@@ -18,11 +18,13 @@ const TeamAPI = {
     department: Joi.any().valid(...DepartmentInfo["list"]),
   }),
 
-  TeamAssign: Joi.object({
-    team_id: Joi.string().required(),
-    session_preGame: Joi.string(),
-    session_interGame: Joi.number(),
-  }),
+  TeamAssign: Joi.array().items(
+    Joi.object().keys({
+      team_id: Joi.string().required(),
+      session_preGame: Joi.string(),
+      session_interGame: Joi.number(),
+    })
+  ),
 
   GetTeam: Joi.object({
     team_id: Joi.string(),

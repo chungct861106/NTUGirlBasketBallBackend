@@ -95,7 +95,7 @@ Team.prototype.Assign = async function (TeamObj) {
   }
   const { team_id } = TeamObj;
 
-  const team = await TeamSchema.findById(team_id);
+  const team = await TeamSchema.find(team_id);
 
   if (!team) {
     logger.error(TAG, "Invalid Parameters");
