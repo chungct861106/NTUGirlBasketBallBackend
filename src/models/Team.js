@@ -112,17 +112,20 @@ Team.prototype.Assign = async function (TeamObj) {
 Team.prototype.Delete = async function (TeamID) {
   const TAG = "[Delete Team]";
   const logger = new Logger();
-  if (config.ADMIN_LEVEL[this.token.admin] < 2) {
-    logger.error(
-      TAG,
-      `Adiminister (${this.token.adim}) has no access to ${TAG}.`
-    );
-    throw exception.PermissionError("Permission Deny", "have no access");
-  }
-
   if (!(await TeamValider.isValidTeamID(TeamID))) {
     logger.error(TAG, "Invalid Parameters");
     throw exception.BadRequestError("BAD_REQUEST", "Invalid Team ID");
+  }
+  const team = await TeamSchema.findById(TeamID);
+  if (
+    config.ADMIN_LEVEL[this.token.admin] < 2 &&
+    !team.user_id.equals(this.token.user_id)
+  ) {
+    logger.error(
+      TAG,
+      `Adiminister (${this.token.admin}) has no access to ${TAG}.`
+    );
+    throw exception.PermissionError("Permission Deny", "have no access");
   }
 
   try {
