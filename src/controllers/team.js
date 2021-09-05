@@ -6,7 +6,7 @@ const router = express.Router();
 
 router.post("/create", async (req, res) => {
   const TeamObj = req.body;
-  const { token } = req.header;
+  const { token } = req.headers;
   try {
     const result = await new Team(token).Create(TeamObj);
     return response.succ(res, result);
@@ -17,7 +17,7 @@ router.post("/create", async (req, res) => {
 
 router.post("/update", async (req, res) => {
   const TeamObj = req.body;
-  const { token } = req.header;
+  const { token } = req.headers;
   try {
     const result = await new Team(token).Update(TeamObj);
     return response.succ(res, result);
@@ -28,7 +28,7 @@ router.post("/update", async (req, res) => {
 
 router.post("/assign", async (req, res) => {
   const TeamObj = req.body;
-  const { token } = req.header;
+  const { token } = req.headers;
   try {
     const result = await new Team(token).Assign(TeamObj);
     return response.succ(res, result);
@@ -38,7 +38,7 @@ router.post("/assign", async (req, res) => {
 });
 
 router.get("/data", async (req, res) => {
-  const { token } = req.header;
+  const { token } = req.headers;
   const ReqInfo = req.query;
   try {
     const result = await new Team(token).GetData(ReqInfo);
@@ -49,7 +49,7 @@ router.get("/data", async (req, res) => {
 });
 
 router.delete("/delete", async (req, res) => {
-  const { token } = req.header;
+  const { token } = req.headers;
   const teamID = req.body.team_id;
   try {
     const result = await new Team(token).Delete(teamID);

@@ -6,7 +6,7 @@ const router = express.Router();
 
 router.post("/create", async (req, res) => {
   const PlayerObj = req.body;
-  const { token } = req.header;
+  const { token } = req.headers;
   try {
     const result = await new Player(token).Create(PlayerObj);
     return response.succ(res, result);
@@ -17,7 +17,7 @@ router.post("/create", async (req, res) => {
 
 router.post("/update", async (req, res) => {
   const PlayerObj = req.body;
-  const { token } = req.header;
+  const { token } = req.headers;
   try {
     const result = await new Player(token).Update(PlayerObj);
     return response.succ(res, result);
@@ -27,7 +27,7 @@ router.post("/update", async (req, res) => {
 });
 
 router.get("/data", async (req, res) => {
-  const { token } = req.header;
+  const { token } = req.headers;
   const ReqInfo = req.query;
   try {
     const result = await new Player(token).GetData(ReqInfo);
@@ -38,7 +38,7 @@ router.get("/data", async (req, res) => {
 });
 
 router.delete("/delete", async (req, res) => {
-  const { token } = req.header;
+  const { token } = req.headers;
   const PlayerID = req.body.player_id;
   try {
     const result = await new Player(token).Delete(PlayerID);

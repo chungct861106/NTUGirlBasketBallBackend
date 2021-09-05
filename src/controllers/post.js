@@ -6,7 +6,7 @@ const router = express.Router();
 
 router.post("/create", async (req, res) => {
   const PostObj = req.body;
-  const { token } = req.header;
+  const { token } = req.headers;
   try {
     const result = await new Post(token).Create(PostObj);
     return response.succ(res, result);
@@ -17,7 +17,7 @@ router.post("/create", async (req, res) => {
 
 router.post("/update", async (req, res) => {
   const PostObj = req.body;
-  const { token } = req.header;
+  const { token } = req.headers;
   try {
     const result = await new Post(token).Update(PostObj);
     return response.succ(res, result);
@@ -26,7 +26,7 @@ router.post("/update", async (req, res) => {
   }
 });
 router.get("/getType", async (req, res) => {
-  const { token } = req.header;
+  const { token } = req.headers;
   const ReqInfo = req.query;
   try {
     const result = await new Post(token).GetData(ReqInfo);
@@ -37,7 +37,7 @@ router.get("/getType", async (req, res) => {
 });
 
 router.delete("/delete", async (req, res) => {
-  const { token } = req.header;
+  const { token } = req.headers;
   const postID = req.body.post_id;
   try {
     const result = await new Post(token).Delete(postID);

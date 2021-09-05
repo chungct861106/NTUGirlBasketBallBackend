@@ -26,8 +26,8 @@ function doAuthAction(req, resp, next) {
 
   let token = req.get("Authorization");
   try {
-    req.header.token = jwt.verify(token, config.SECRET_KEY);
-    const expTime = req.header.token.exp;
+    req.headers.token = jwt.verify(token, config.SECRET_KEY);
+    const expTime = req.headers.token.exp;
     const nowTime = tool.getUnixTimestamp(Date.now());
     if (nowTime > expTime) {
       logger.error(
@@ -38,7 +38,7 @@ function doAuthAction(req, resp, next) {
         resp,
         exception.PermissionError("INVALID_TOKEN", "invalid token")
       );
-    } else if (req.header.token.active === 0) {
+    } else if (req.headers.token.active === 0) {
       logger.error(
         TAG,
         `This token is not actived yet, please contact adimisiter.`

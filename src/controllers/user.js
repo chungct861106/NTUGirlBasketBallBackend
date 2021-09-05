@@ -25,7 +25,7 @@ router.put("/login", async (req, res) => {
 
 router.post("/active", async (req, res) => {
   const { id } = req.body;
-  const { token } = req.header;
+  const { token } = req.headers;
   try {
     const result = await new User(token).Active(id);
     return response.succ(res, result);
@@ -36,7 +36,7 @@ router.post("/active", async (req, res) => {
 
 router.post("/update", async (req, res) => {
   const updateObj = req.body;
-  const { token } = req.header;
+  const { token } = req.headers;
   try {
     const result = await new User(token).Update(updateObj);
     return response.succ(res, result);
