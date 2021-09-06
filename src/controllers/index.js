@@ -8,4 +8,5 @@ router.use("/teams", require("./team"));
 router.use("/matches", require("./match"));
 router.use("/players", require("./player"));
 router.use("/tests", require("./test"));
+router.use("/time", require("./time"));
 module.exports = router;

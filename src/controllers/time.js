@@ -1,36 +1,25 @@
 const express = require("express");
 const response = require("../modules/response");
-const Team = require("../models/Team");
+const Time = require("../models/Time");
 
 const router = express.Router();
 
-router.post("/create", async (req, res) => {
-  const TeamObj = req.body;
+router.put("/team/appoint", async (req, res) => {
   const { token } = req.headers;
+  const { teamID, timeNumber } = req.body;
   try {
-    const result = await new Team(token).Create(TeamObj);
+    const result = await new Time(token).Appoint({ timeNumber, teamID });
     return response.succ(res, result);
   } catch (err) {
     return response.fail(res, err);
   }
 });
 
-router.post("/update", async (req, res) => {
-  const TeamObj = req.body;
+router.put("/recorder/appoint", async (req, res) => {
   const { token } = req.headers;
+  const { userID, timeNumber } = req.body;
   try {
-    const result = await new Team(token).Update(TeamObj);
-    return response.succ(res, result);
-  } catch (err) {
-    return response.fail(res, err);
-  }
-});
-
-router.post("/assign", async (req, res) => {
-  const TeamObj = req.body;
-  const { token } = req.headers;
-  try {
-    const result = await new Team(token).Assign(TeamObj);
+    const result = await new Time(token).Appoint({ timeNumber, userID });
     return response.succ(res, result);
   } catch (err) {
     return response.fail(res, err);
@@ -39,20 +28,32 @@ router.post("/assign", async (req, res) => {
 
 router.get("/data", async (req, res) => {
   const { token } = req.headers;
-  const ReqInfo = req.query;
+  const { type } = req.query;
   try {
-    const result = await new Team(token).GetData(ReqInfo);
+    const result = await new Time(token).GetTime(type);
+
     return response.succ(res, result);
   } catch (err) {
     return response.fail(res, err);
   }
 });
 
-router.delete("/delete", async (req, res) => {
+router.get("/team", async (req, res) => {
   const { token } = req.headers;
-  const teamID = req.body.team_id;
+  const { team_id } = req.query;
   try {
-    const result = await new Team(token).Delete(teamID);
+    const result = await new Time(token).GetTimeById({ team_id });
+    return response.succ(res, result);
+  } catch (err) {
+    return response.fail(res, err);
+  }
+});
+
+router.get("/user", async (req, res) => {
+  const { token } = req.headers;
+  const { user_id } = req.query;
+  try {
+    const result = await new Time(token).GetTimeById({ user_id });
     return response.succ(res, result);
   } catch (err) {
     return response.fail(res, err);

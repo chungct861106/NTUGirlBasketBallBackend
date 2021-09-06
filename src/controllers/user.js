@@ -46,7 +46,7 @@ router.post("/update", async (req, res) => {
 });
 
 router.get("/checkToken", async (req, res) => {
-  const { token } = req.body;
+  const { token } = req.query;
   try {
     const result = await new User().CheckToken(token);
     return response.succ(res, result);

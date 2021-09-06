@@ -18,12 +18,14 @@ class User {
     // gen token
     const iat = Math.floor(Date.now() / 1000);
     const expTime = 5 * 60 * 60;
+    console.log(userObj);
     const payload = {
       user_id: userObj._id,
       account: userObj.account,
       email: userObj.email,
       admin: userObj.admin,
       active: userObj.active,
+      department: userObj.department,
       iat: iat,
       exp: iat + expTime,
     };
