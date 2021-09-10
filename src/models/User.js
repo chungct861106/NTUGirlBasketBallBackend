@@ -9,7 +9,15 @@ const {
   CreateAccountEmail,
   ActiveAccountEmail,
 } = require("../modules/emailer");
-const { CreateUser, UserActive, UserLogin, UserUpdate, UserRemind } = UserAPI;
+const { func } = require("joi");
+const {
+  CreateUser,
+  UserActive,
+  UserLogin,
+  UserUpdate,
+  UserRemind,
+  GetUserData,
+} = UserAPI;
 class User {
   constructor(token) {
     this.token = token;
@@ -189,6 +197,22 @@ User.prototype.Update = async function (updateObj) {
     logger.error(TAG, "Update Failed");
     throw exception.ServerError("SERVER_ERROR", "Update Failed:" + err);
   }
+};
+
+User.prototype.GetData = async function (userQuery) {
+  const TAG = "[Get User]";
+  const logger = new Logger();
+  const validate = await GetUserData.validate(userQuery);
+  if (validate.error) {
+    logger.error(TAG, "Invalid Parameters");
+    throw exception.BadRequestError(
+      "BAD_REQUEST",
+      validate.error.details[0].message
+    );
+  }
+  if (userQuery.user_id && (await UserValider.isValidUserID(userQuery.user_id)))
+    return await UserSchema.findById(user_id, "-password");
+  return await UserSchema.find(userQuery, "-password");
 };
 
 User.prototype.Remind = async function (email) {

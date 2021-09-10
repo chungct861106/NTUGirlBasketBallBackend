@@ -55,6 +55,17 @@ router.get("/checkToken", async (req, res) => {
   }
 });
 
+router.get("/data", async (req, res) => {
+  const { token } = req.header;
+  const userQuery = req.query;
+  try {
+    const result = await new User(token).GetData(userQuery);
+    return response.succ(res, result);
+  } catch (err) {
+    return response.fail(res, err);
+  }
+});
+
 router.put("/remind", async (req, res) => {
   const { email } = req.body;
   try {

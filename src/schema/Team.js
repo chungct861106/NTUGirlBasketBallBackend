@@ -16,6 +16,10 @@ const TeamSchema = new Schema({
     type: String,
     required: [true, "Department is required."],
   },
+  status: {
+    type: String,
+    default: "未報名",
+  },
   session_preGame: {
     type: String,
     default: "Not Arranged",

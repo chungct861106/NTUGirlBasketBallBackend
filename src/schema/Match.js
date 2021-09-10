@@ -8,7 +8,7 @@ const MatchSchema = new Schema({
   },
   home: { type: mongoose.Types.ObjectId, ref: "team", required: true },
   away: { type: mongoose.Types.ObjectId, ref: "team", required: true },
-  stage: { type: String, default: null },
+  stage: { type: String, default: "preGame" },
   stage_session: { type: String, default: null },
   startDate: {
     type: Date,

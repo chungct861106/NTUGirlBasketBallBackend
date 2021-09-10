@@ -20,6 +20,7 @@ const PlayerAPI = {
     studentID: Joi.string(),
     grade: Joi.number(),
     photo: Joi.string(),
+    number: Joi.number(),
   }),
 
   GetPlayer: Joi.object({

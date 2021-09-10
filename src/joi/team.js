@@ -23,6 +23,7 @@ const TeamAPI = {
       team_id: Joi.string().required(),
       session_preGame: Joi.string(),
       session_interGame: Joi.number(),
+      status: Joi.any().valid("未報名", "未繳費", "已繳費"),
     })
   ),
 

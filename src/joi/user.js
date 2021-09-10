@@ -44,7 +44,17 @@ const UserAPI = {
       .required()
       .pattern(new RegExp("^[a-zA-Z0-9]{3,30}$")),
   }),
+  GetUserData: Joi.object({
+    user_id: Joi.string(),
+    account: Joi.string().alphanum(),
+    email: Joi.string().email({
+      minDomainSegments: 2,
+      tlds: { allow: ["com", "net", "tw"] },
+    }),
 
+    admin: Joi.any().valid("administer", "team", "recorder"),
+    department: Joi.any().valid(...DepartmentInfo["list"]),
+  }),
   UserActive: Joi.object({
     id: Joi.string().required(),
   }),
