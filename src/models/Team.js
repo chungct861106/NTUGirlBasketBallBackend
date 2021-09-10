@@ -93,20 +93,24 @@ Team.prototype.Assign = async function (TeamObj) {
       validate.error.details[0].message
     );
   }
-  const { team_id } = TeamObj;
 
-  const team = await TeamSchema.find(team_id);
+  TeamObj.map(async (aTeam) => {
+    const { team_id } = aTeam;
+    const team = await TeamSchema.findById(team_id);
 
-  if (!team) {
-    logger.error(TAG, "Invalid Parameters");
-    throw exception.BadRequestError("BAD_REQUEST", "Invalid Team ID");
-  }
-  try {
-    return await TeamSchema.findByIdAndUpdate(team_id, TeamObj, { new: true });
-  } catch (err) {
-    logger.error(TAG, "Update Team Failed");
-    throw exception.ServerError("SERVER_ERROR", err);
-  }
+    if (!team) {
+      logger.error(TAG, "Invalid Parameters");
+      throw exception.BadRequestError("BAD_REQUEST", "Invalid Team ID");
+    }
+    try {
+      return await TeamSchema.findByIdAndUpdate(team_id, aTeam, {
+        new: true,
+      });
+    } catch (err) {
+      logger.error(TAG, "Update Team Failed");
+      throw exception.ServerError("SERVER_ERROR", err);
+    }
+  });
 };
 
 Team.prototype.Delete = async function (TeamID) {
