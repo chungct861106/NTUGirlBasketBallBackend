@@ -94,7 +94,7 @@ Team.prototype.Assign = async function (TeamObj) {
     );
   }
 
-  TeamObj.map(async (aTeam) => {
+  return TeamObj.map(async (aTeam) => {
     const { team_id } = aTeam;
     const team = await TeamSchema.findById(team_id);
 
@@ -158,6 +158,43 @@ Team.prototype.GetData = async function (ReqInfo) {
   )
     return await TeamSchema.findById(ReqInfo["team_id"]);
   return await TeamSchema.find(ReqInfo);
+};
+
+Team.prototype.SetStatus = async function (TeamObj) {
+  const TAG = "[Status Team]";
+  const logger = new Logger();
+  if (config.ADMIN_LEVEL[this.token.admin] < 2) {
+    logger.error(
+      TAG,
+      `Adiminister (${this.token.adim}) has no access to ${TAG}.`
+    );
+    throw exception.PermissionError("Permission Deny", "have no access");
+  }
+
+  const validate = await TeamAPI.TeamSetStatus.validate(TeamObj);
+  if (validate.error) {
+    logger.error(TAG, "Invalid Parameters");
+    throw exception.BadRequestError(
+      "BAD_REQUEST",
+      validate.error.details[0].message
+    );
+  }
+
+  const { team_id } = TeamObj;
+  const team = await TeamSchema.findById(team_id);
+
+  if (!team) {
+    logger.error(TAG, "Invalid Parameters");
+    throw exception.BadRequestError("BAD_REQUEST", "Invalid Team ID");
+  }
+  try {
+    return await TeamSchema.findByIdAndUpdate(team_id, TeamObj, {
+      new: true,
+    });
+  } catch (err) {
+    logger.error(TAG, "Update Team Failed");
+    throw exception.ServerError("SERVER_ERROR", err);
+  }
 };
 
 module.exports = Team;

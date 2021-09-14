@@ -37,6 +37,17 @@ router.post("/assign", async (req, res) => {
   }
 });
 
+router.post("/status", async (req, res) => {
+  const TeamObj = req.body;
+  const { token } = req.headers;
+  try {
+    const result = await new Team(token).SetStatus(TeamObj);
+    return response.succ(res, result);
+  } catch (err) {
+    return response.fail(res, err);
+  }
+});
+
 router.get("/data", async (req, res) => {
   const { token } = req.headers;
   const ReqInfo = req.query;

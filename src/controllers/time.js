@@ -49,7 +49,7 @@ router.get("/team", async (req, res) => {
   }
 });
 
-router.get("/user", async (req, res) => {
+router.get("/recorder", async (req, res) => {
   const { token } = req.headers;
   const { user_id } = req.query;
   try {
