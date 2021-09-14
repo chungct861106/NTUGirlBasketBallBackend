@@ -12,6 +12,8 @@ const whiteList = [
   { url: "/users/create", method: "POST" },
   { url: "/users/checkToken", method: "GET" },
   { url: "/posts/getType", method: "GET" },
+  { url: "/users/data", method: "GET" },
+  { url: "/matches/data", method: "GET" },
 ];
 
 function doAuthAction(req, resp, next) {
