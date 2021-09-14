@@ -5,7 +5,6 @@ const TeamSchema = require("../schema/Team");
 const UserSchema = require("../schema/User");
 const config = require("../config");
 const { TeamValider } = require("../joi/team");
-const Team = require("../schema/Team");
 
 class Time {
   constructor(token) {
@@ -66,20 +65,13 @@ Time.prototype.GetTime = async function (type) {
     );
     throw exception.PermissionError("Permission Deny", "have no access");
   }
-  if (type === "team") {
-    const data = await TimeSchema.find({ team_id: { $ne: null } });
-    return Promise.all(
-      data.map(async (time) => {
-        const team = await TeamSchema.findById(time.team_id);
-        return {
-          team_id: team._id,
-          name: team.name,
-          time: time ? time.time : null,
-        };
-      })
-    );
-  }
-  return await TimeSchema.find({ user_id: { $ne: null } });
+  const output = { team: {}, recorder: {} };
+  const data = await TimeSchema.find();
+  data.forEach((element) => {
+    if (element.team_id) output.team[element.team_id] = element.time;
+    else if (element.user_id) output.recorder[element.user_id] = element.time;
+  });
+  return output;
 };
 
 Time.prototype.GetTimeById = async function ({ user_id, team_id }) {
@@ -94,13 +86,13 @@ Time.prototype.GetTimeById = async function ({ user_id, team_id }) {
     const data = await TimeSchema.findOne({ team_id });
     return { id: team._id, name: team.name, time: data ? data.time : [] };
   }
-  if (!(await TeamValider.isValidUserID(team_id))) {
+  if (!(await TeamValider.isValidUserID(user_id))) {
     logger.error(TAG, `Invalid User ID.`);
     throw exception.BadRequestError("BAD_REQUEST", "Invalid User ID");
   }
   const user = await UserSchema.findById(user_id);
   const data = await TimeSchema.findOne({ user_id });
-  return { id: user._id, name: user.name, time: data.time };
+  return { id: user._id, name: user.name, time: data ? data.time : [] };
 };
 
 module.exports = Time;

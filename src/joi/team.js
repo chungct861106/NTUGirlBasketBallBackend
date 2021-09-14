@@ -27,6 +27,10 @@ const TeamAPI = {
       status: Joi.any().valid("未報名", "未繳費", "已繳費"),
     })
   ),
+  TeamSetStatus: Joi.object({
+    team_id: Joi.string(),
+    status: Joi.any().valid("未報名", "未繳費", "已繳費"),
+  }),
 
   GetTeam: Joi.object({
     team_id: Joi.string(),
