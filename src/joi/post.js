@@ -7,7 +7,7 @@ const PostAPI = {
   CreatePost: Joi.object({
     type: Joi.any().valid("news", "news_image").required(),
 
-    title_catagory: Joi.any().valid("報名", "賽程", "消息").required(),
+    title_catagory: Joi.any().valid("報名", "賽程", "消息", "圖片").required(),
 
     title_content: Joi.string(),
     content: Joi.string().uri(),
@@ -17,7 +17,7 @@ const PostAPI = {
     post_id: Joi.string().required(),
     type: Joi.any().valid("news", "news_image"),
 
-    title_catagory: Joi.any().valid("報名", "賽程", "消息"),
+    title_catagory: Joi.any().valid("報名", "賽程", "消息", "圖片"),
 
     title_content: Joi.string(),
     content: Joi.string().uri(),
