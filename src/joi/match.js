@@ -7,8 +7,8 @@ const MatchAPI = {
   CreateMatch: Joi.object({
     home: Joi.string().required(),
     away: Joi.string().required(),
-    stage: Joi.string(),
-    stage_Session: Joi.any().valid("interGame", "preGame"),
+    stage: Joi.any().valid("interGame", "preGame"),
+    stage_session: Joi.string(),
   }),
 
   MatchUpdate: Joi.object({
@@ -26,7 +26,7 @@ const MatchAPI = {
     home: Joi.string(),
     away: Joi.string(),
     stage: Joi.any().valid("interGame", "preGame"),
-    stage_Session: Joi.string(),
+    stage_session: Joi.string(),
     startDate: Joi.date(),
     field: Joi.number().max(2).min(0),
     recorder: Joi.string(),

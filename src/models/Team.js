@@ -74,7 +74,7 @@ Team.prototype.Update = async function (TeamObj) {
   }
 };
 
-Team.prototype.Assign = async function (TeamObj) {
+Team.prototype.Assign = async function ({ TeamObj }) {
   const TAG = "[Assign Team]";
   const logger = new Logger();
   if (config.ADMIN_LEVEL[this.token.admin] < 2) {
@@ -94,23 +94,34 @@ Team.prototype.Assign = async function (TeamObj) {
     );
   }
 
-  return TeamObj.map(async (aTeam) => {
-    const { team_id } = aTeam;
-    const team = await TeamSchema.findById(team_id);
+  try {
+    const mapResult = TeamObj.map(async (aTeam) => {
+      const { team_id } = aTeam;
+      const team = await TeamSchema.findById(team_id);
 
-    if (!team) {
-      logger.error(TAG, "Invalid Parameters");
-      throw exception.BadRequestError("BAD_REQUEST", "Invalid Team ID");
-    }
-    try {
-      return await TeamSchema.findByIdAndUpdate(team_id, aTeam, {
-        new: true,
-      });
-    } catch (err) {
-      logger.error(TAG, "Update Team Failed");
-      throw exception.ServerError("SERVER_ERROR", err);
-    }
-  });
+      if (!team) {
+        logger.error(TAG, "Invalid Parameters");
+        throw exception.BadRequestError("BAD_REQUEST", "Invalid Team ID");
+      }
+      try {
+        const updateSuccess = await TeamSchema.findByIdAndUpdate(
+          team_id,
+          aTeam,
+          {
+            new: true,
+          }
+        );
+      } catch (err) {
+        logger.error(TAG, "Update Team Failed");
+        throw exception.ServerError("SERVER_ERROR", err);
+      }
+    });
+  } catch (err) {
+    logger.error(TAG, "Update Teams Failed");
+    throw exception.ServerError("SERVER_ERROR", err);
+  }
+
+  return;
 };
 
 Team.prototype.Delete = async function (TeamID) {
