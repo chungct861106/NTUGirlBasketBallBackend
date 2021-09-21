@@ -26,6 +26,6 @@ const MatchSchema = new Schema({
   winner: { type: mongoose.Types.ObjectId, ref: "team", default: null },
 });
 
-const Match = mongoose.model("Match", MatchSchema);
+const Match = mongoose.model("match", MatchSchema);
 
 module.exports = Match;
