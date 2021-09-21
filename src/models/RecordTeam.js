@@ -45,3 +45,5 @@ RecordTeam.prototype.Delete = async function (RecordTeam_id) {
     throw exception.ServerError("SERVER_ERROR", "Delete Match Failed:" + err);
   }
 };
+
+module.exports = RecordTeam;
