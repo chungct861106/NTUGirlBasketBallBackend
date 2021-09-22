@@ -52,10 +52,13 @@ Match.prototype.Create = async function (MatchObj) {
 Match.prototype.Update = async function (MatchObj) {
   const TAG = "[Update Match]";
   const logger = new Logger();
-  if (config.ADMIN_LEVEL[this.token.admin] < 2) {
+  if (
+    config.ADMIN_LEVEL[this.token.admin] < 2 &&
+    this.token.admin !== "recorder"
+  ) {
     logger.error(
       TAG,
-      `Adiminister (${this.token.adim}) has no access to ${TAG}.`
+      `Adiminister (${this.token.admin}) has no access to ${TAG}.`
     );
     throw exception.PermissionError("Permission Deny", "have no access");
   }

@@ -23,7 +23,7 @@ const MatchSchema = new Schema({
     type: Date,
     default: moment.tz(Date.now(), "Asia/Taipei"),
   },
-  winner: { type: mongoose.Types.ObjectId, ref: "team", default: null },
+  winner: { type: String, default: null },
 });
 
 const Match = mongoose.model("match", MatchSchema);
