@@ -22,7 +22,7 @@ RecordTeam.prototype.Create = async function (TeamObj) {
     );
   }
   try {
-    const RecordTeam = new TeamSchema(TeamObj);
+    const RecordTeam = new RecordTeamSchema(TeamObj);
     return RecordTeam.save();
   } catch (err) {
     logger.error(TAG, "Create RecordTeam Failed");
