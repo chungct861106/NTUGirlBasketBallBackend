@@ -9,7 +9,7 @@ const {
   CreateAccountEmail,
   ActiveAccountEmail,
 } = require("../modules/emailer");
-const { func } = require("joi");
+
 const {
   CreateUser,
   UserActive,
@@ -26,7 +26,6 @@ class User {
     // gen token
     const iat = Math.floor(Date.now() / 1000);
     const expTime = 5 * 60 * 60;
-    console.log(userObj);
     const payload = {
       user_id: userObj._id,
       account: userObj.account,
@@ -211,7 +210,7 @@ User.prototype.GetData = async function (userQuery) {
     );
   }
   if (userQuery.user_id && (await UserValider.isValidUserID(userQuery.user_id)))
-    return await UserSchema.findById(user_id, "-password");
+    return await UserSchema.findById(userQuery.user_id, "-password");
   return await UserSchema.find(userQuery, "-password");
 };
 

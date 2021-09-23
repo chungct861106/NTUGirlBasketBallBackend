@@ -2,6 +2,7 @@ const exception = require("../modules/exception");
 const { TeamAPI, TeamValider } = require("../joi/Team");
 const Logger = require("../modules/logger");
 const TeamSchema = require("../schema/Team");
+const UserSchema = require("../schema/User");
 const config = require("../config");
 
 class Team {
@@ -168,7 +169,13 @@ Team.prototype.GetData = async function (ReqInfo) {
     (await TeamValider.isValidTeamID(ReqInfo["team_id"]))
   )
     return await TeamSchema.findById(ReqInfo["team_id"]);
-  return await TeamSchema.find(ReqInfo);
+  const data = await TeamSchema.find(ReqInfo);
+  return Promise.all(
+    data.map(async (team) => {
+      team.user_id = await UserSchema.findById(team.user_id);
+      return team;
+    })
+  );
 };
 
 Team.prototype.SetStatus = async function (TeamObj) {
