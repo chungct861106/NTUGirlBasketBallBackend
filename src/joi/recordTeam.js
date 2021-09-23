@@ -18,6 +18,10 @@ const RecordTeamAPI = {
     stopWatch4: Joi.boolean().required(),
     stopWatch5: Joi.boolean().required(),
   }),
+  GetRecordTeam: Joi.object({
+    recordTeam_id: Joi.string(),
+    team_id: Joi.string(),
+  }),
 };
 
 module.exports.RecordTeamAPI = RecordTeamAPI;

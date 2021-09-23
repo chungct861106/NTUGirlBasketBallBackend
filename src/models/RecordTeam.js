@@ -46,4 +46,25 @@ RecordTeam.prototype.Delete = async function (RecordTeam_id) {
   }
 };
 
+RecordTeam.prototype.GetData = async function (ReqInfo) {
+  const TAG = "[GetData RecordTeam]";
+  const logger = new Logger();
+  const validate = await RecordTeamAPI.GetRecordTeam.validate(ReqInfo);
+  if (validate.error) {
+    logger.error(TAG, "Invalid Parameters");
+    throw exception.BadRequestError(
+      "BAD_REQUEST",
+      validate.error.details[0].message
+    );
+  }
+
+  const data = await RecordTeamSchema.findById(ReqInfo["recordTeam_id"]);
+  return Promise.all(
+    data.map(async (element) => {
+      element.team_id = await TeamSchema.findById(element.team_id);
+      return element;
+    })
+  );
+};
+
 module.exports = RecordTeam;
