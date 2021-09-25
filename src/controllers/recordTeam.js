@@ -35,5 +35,15 @@ router.get("/data", async (req, res) => {
     return response.fail(res, err);
   }
 });
+router.post("/update", async (req, res) => {
+  const RecordTeamObj = req.body;
+  const { token } = req.headers;
+  try {
+    const result = await new RecordTeam(token).Update(RecordTeamObj);
+    return response.succ(res, result);
+  } catch (err) {
+    return response.fail(res, err);
+  }
+});
 
 module.exports = router;

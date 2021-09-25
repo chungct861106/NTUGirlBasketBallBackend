@@ -57,14 +57,56 @@ RecordTeam.prototype.GetData = async function (ReqInfo) {
       validate.error.details[0].message
     );
   }
-
-  const data = await RecordTeamSchema.findById(ReqInfo["recordTeam_id"]);
+  if ("recordTeam_id" in ReqInfo)
+    return await RecordTeamSchema.findById(ReqInfo["recordTeam_id"]);
+  const data = await RecordTeamSchema.find(ReqInfo);
   return Promise.all(
     data.map(async (element) => {
-      element.team_id = await TeamSchema.findById(element.team_id);
+      element.recordTeam_id = await RecordTeamSchema.findById(
+        element.recordTeam_id
+      );
       return element;
     })
   );
+};
+
+RecordTeam.prototype.Update = async function (RecordTeamObj) {
+  const TAG = "[Update RecordTeam]";
+  const logger = new Logger();
+  if (config.ADMIN_LEVEL[this.token.admin] < 2) {
+    logger.error(
+      TAG,
+      `Adiminister (${this.token.admin}) has no access to ${TAG}.`
+    );
+    throw exception.PermissionError("Permission Deny", "have no access");
+  }
+
+  const validate = await RecordTeamAPI.RecordTeamUpdate.validate(RecordTeamObj);
+  if (validate.error) {
+    logger.error(TAG, "Invalid Parameters");
+    throw exception.BadRequestError(
+      "BAD_REQUEST",
+      validate.error.details[0].message
+    );
+  }
+  const { recordTeam_id } = RecordTeamObj;
+  const RecordTeam = await RecordTeamSchema.findById(recordTeam_id);
+  if (!RecordTeam) {
+    logger.error(TAG, "Invalid Parameters");
+    throw exception.BadRequestError("BAD_REQUEST", "Invalid RecordTeam ID");
+  }
+  try {
+    return await RecordTeamSchema.findByIdAndUpdate(
+      recordTeam_id,
+      RecordTeamObj,
+      {
+        new: true,
+      }
+    );
+  } catch (err) {
+    logger.error(TAG, "Update RecordTeam Failed");
+    throw exception.ServerError("SERVER_ERROR", err);
+  }
 };
 
 module.exports = RecordTeam;
