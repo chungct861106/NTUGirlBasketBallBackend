@@ -32,10 +32,11 @@ Match.prototype.Create = async function (MatchObj) {
     );
   }
   const { home, away } = MatchObj;
-  if (!(await TeamValider.isValidTeamID(home))) {
-    logger.error(TAG, "Invalid Parameters");
-    throw exception.BadRequestError("BAD_REQUEST", "Invalid Home Team ID");
-  } else if (!(await TeamValider.isValidTeamID(away))) {
+  // if (!(home === "none" || (await TeamValider.isValidTeamID(home)))) {
+  //   logger.error(TAG, "Invalid Parameters");
+  //   throw exception.BadRequestError("BAD_REQUEST", "Invalid Home Team ID");
+  // } else
+  if (!(await TeamValider.isValidTeamID(away))) {
     logger.error(TAG, "Invalid Parameters");
     throw exception.BadRequestError("BAD_REQUEST", "Invalid Away Team ID");
   }

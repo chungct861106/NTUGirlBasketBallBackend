@@ -19,7 +19,27 @@ router.delete("/delete", async (req, res) => {
   const { token } = req.headers;
   const RecordTeamID = req.body.recordTeam_id;
   try {
-    const result = await new Match(token).Delete(RecordTeamID);
+    const result = await new RecordTeam(token).Delete(RecordTeamID);
+    return response.succ(res, result);
+  } catch (err) {
+    return response.fail(res, err);
+  }
+});
+router.get("/data", async (req, res) => {
+  const { token } = req.headers;
+  const ReqInfo = req.query;
+  try {
+    const result = await new RecordTeam(token).GetData(ReqInfo);
+    return response.succ(res, result);
+  } catch (err) {
+    return response.fail(res, err);
+  }
+});
+router.post("/update", async (req, res) => {
+  const RecordTeamObj = req.body;
+  const { token } = req.headers;
+  try {
+    const result = await new RecordTeam(token).Update(RecordTeamObj);
     return response.succ(res, result);
   } catch (err) {
     return response.fail(res, err);

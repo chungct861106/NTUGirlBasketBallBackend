@@ -5,7 +5,7 @@ const UserSchema = require("../schema/User");
 
 const MatchAPI = {
   CreateMatch: Joi.object({
-    home: Joi.string().required(),
+    home: Joi.string().required().allow(null),
     away: Joi.string().required(),
     stage: Joi.any().valid("interGame", "preGame"),
     stage_session: Joi.string(),
