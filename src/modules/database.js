@@ -12,6 +12,7 @@ function connectMongo() {
     useNewUrlParser: true,
     useUnifiedTopology: true,
     useCreateIndex: true,
+    useFindAndModify: false,
   });
 
   const db = mongoose.connection;

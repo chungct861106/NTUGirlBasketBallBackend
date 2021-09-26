@@ -28,8 +28,9 @@ const TeamAPI = {
     })
   ),
   TeamSetStatus: Joi.object({
-    team_id: Joi.string(),
+    team_id: Joi.string().required(),
     status: Joi.any().valid("未報名", "未繳費", "已繳費"),
+    session_interGame: Joi.number(),
   }),
 
   GetTeam: Joi.object({

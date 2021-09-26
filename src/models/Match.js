@@ -4,6 +4,7 @@ const { TeamValider } = require("../joi/team");
 const Logger = require("../modules/logger");
 const MatchSchema = require("../schema/Match");
 const TeamSchema = require("../schema/Team");
+const UserSchema = require("../schema/User");
 const config = require("../config");
 
 class Match {
@@ -81,9 +82,13 @@ Match.prototype.Update = async function (MatchObj) {
     throw exception.BadRequestError("BAD_REQUEST", "Invalid Match ID");
   }
   try {
-    return await MatchSchema.findByIdAndUpdate(match_id, MatchObj, {
+    const newMatch = await MatchSchema.findByIdAndUpdate(match_id, MatchObj, {
       new: true,
     });
+    newMatch.home = await TeamSchema.findById(newMatch.home);
+    newMatch.away = await TeamSchema.findById(newMatch.away);
+    newMatch.recorder = await UserSchema.findById(newMatch.recorder);
+    return newMatch;
   } catch (err) {
     logger.error(TAG, "Update Match Failed");
     throw exception.ServerError("SERVER_ERROR", err);
