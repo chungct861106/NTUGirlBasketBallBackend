@@ -8,12 +8,7 @@ if (!process.env.MONGO_URL) {
 }
 
 function connectMongo() {
-  mongoose.connect(process.env.MONGO_URL, {
-    useNewUrlParser: true,
-    useUnifiedTopology: true,
-    useCreateIndex: true,
-    useFindAndModify: false,
-  });
+  mongoose.connect(process.env.MONGO_URL);
 
   const db = mongoose.connection;
 
