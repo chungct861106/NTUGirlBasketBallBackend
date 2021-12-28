@@ -5,7 +5,7 @@
   "license": "MIT",
   "scripts": {
     "server": "nodemon bin/www --ext js --watch src --exec babel-node",
-    "start": "nodemon bin/www --ext js --watch src --exec babel-node"
+    "start": "node bin/www --ext js --watch src --exec babel-node"
   },
   "devDependencies": {
     "@babel/cli": "^7.13.16",
