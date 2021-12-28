@@ -14,9 +14,9 @@ router.post("/create", async (req, res) => {
 });
 
 router.put("/login", async (req, res) => {
-  const { account, password } = req.body;
+  const { email, password } = req.body;
   try {
-    const result = await new User().Login(account, password);
+    const result = await new User().Login(email, password);
     return response.succ(res, result);
   } catch (err) {
     return response.fail(res, err);
@@ -24,10 +24,9 @@ router.put("/login", async (req, res) => {
 });
 
 router.post("/active", async (req, res) => {
-  const { id } = req.body;
   const { token } = req.headers;
   try {
-    const result = await new User(token).Active(id);
+    const result = await new User(token).Active();
     return response.succ(res, result);
   } catch (err) {
     return response.fail(res, err);
@@ -56,10 +55,9 @@ router.get("/checkToken", async (req, res) => {
 });
 
 router.get("/data", async (req, res) => {
-  const { token } = req.header;
-  const userQuery = req.query;
+  const { token } = req.headers;
   try {
-    const result = await new User(token).GetData(userQuery);
+    const result = await new User(token).GetData();
     return response.succ(res, result);
   } catch (err) {
     return response.fail(res, err);
@@ -70,6 +68,15 @@ router.put("/remind", async (req, res) => {
   const { email } = req.body;
   try {
     const result = await new User().Remind(email);
+    return response.succ(res, result);
+  } catch (err) {
+    return response.fail(res, err);
+  }
+});
+router.put("/resend", async (req, res) => {
+  const { email } = req.body;
+  try {
+    const result = await new User().Resend(email);
     return response.succ(res, result);
   } catch (err) {
     return response.fail(res, err);

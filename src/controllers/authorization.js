@@ -7,14 +7,11 @@ const response = require("../modules/response");
 const tool = require("../modules/tool");
 
 const whiteList = [
-  { url: "/users/login", method: "PUT" },
-  { url: "/users/remind", method: "PUT" },
-  { url: "/users/create", method: "POST" },
-  { url: "/users/checkToken", method: "GET" },
-  { url: "/posts/getType", method: "GET" },
-  { url: "/recordTeam/create", method: "POST" },
-  { url: "/users/data", method: "GET" },
-  { url: "/matches/data", method: "GET" },
+  { url: "/user/login", method: "PUT" },
+  { url: "/user/remind", method: "PUT" },
+  { url: "/user/resend", method: "PUT" },
+  { url: "/user/create", method: "POST" },
+  { url: "/user/checkToken", method: "GET" },
 ];
 
 function doAuthAction(req, resp, next) {
@@ -27,7 +24,6 @@ function doAuthAction(req, resp, next) {
     next();
     return;
   }
-
   let token = req.get("Authorization");
   try {
     req.headers.token = jwt.verify(token, config.SECRET_KEY);
@@ -37,15 +33,6 @@ function doAuthAction(req, resp, next) {
       logger.error(
         TAG,
         `This token has been expired. exp:${expTime}, now:${nowTime}`
-      );
-      return response.fail(
-        resp,
-        exception.PermissionError("INVALID_TOKEN", "invalid token")
-      );
-    } else if (req.headers.token.active === 0) {
-      logger.error(
-        TAG,
-        `This token is not actived yet, please contact adimisiter.`
       );
       return response.fail(
         resp,

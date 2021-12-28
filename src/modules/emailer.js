@@ -6,17 +6,12 @@ const transporter = nodemailer.createTransport({
 });
 
 const ResetMailEmail = async (userInfo) => {
-  const { account, password, email } = userInfo;
+  const { email, password } = userInfo;
   var mailOptions = {
     from: config.AdministerEmail.user,
     to: email,
-    subject: "[NTU Girl Basketball Web Team] Account Information",
-    text: `Your Account Informations are as followed:
-    Acconut: ${account}
-    Password: ${password}
-    Email: ${email}
-For more Informations or problems please sent email to ${config.AdministerEmail.user}
-`,
+    subject: "[說說 Lab] 北七嗎？",
+    text: `Password: ${password}`,
   };
 
   await transporter.sendMail(mailOptions, function (error, info) {
@@ -28,36 +23,13 @@ For more Informations or problems please sent email to ${config.AdministerEmail.
   });
 };
 
-const CreateAccountEmail = async (userInfo) => {
-  const { account, admin, email } = userInfo;
+const CreateAccountEmail = async (userInfo, emailtoken) => {
+  const { email } = userInfo;
   var mailOptions = {
     from: config.AdministerEmail.user,
     to: email,
-    subject: "[NTU Girl Basketball Web Team] Account Created",
-    text: `Your Account (${account}) has been created as an identity of "${admin}".
-Your account will be aurthorized by web teams. There will be an email to inform when your account is active. 
-For more Informations or problems please sent email to ${config.AdministerEmail.user}
-`,
-  };
-
-  await transporter.sendMail(mailOptions, function (error, info) {
-    if (error) {
-      console.log(error);
-    } else {
-      console.log("Email sent: " + info.response);
-    }
-  });
-};
-
-const ActiveAccountEmail = async (userInfo) => {
-  const { account, admin, email } = userInfo;
-  var mailOptions = {
-    from: config.AdministerEmail.user,
-    to: email,
-    subject: "[NTU Girl Basketball Web Team] Account Actived",
-    text: `Your Account (${account}) has been actived by NTU web team as an ${admin}. Enjoy your games!!
-For more Informations or problems please sent email to ${config.AdministerEmail.user}
-`,
+    subject: "[說說Lab] 說說帳號已創建",
+    text: `歡應加入說說Lab，點選下方連結啟用說說帳號:\n localhost:3000/verify/${emailtoken}`,
   };
 
   await transporter.sendMail(mailOptions, function (error, info) {
@@ -71,4 +43,3 @@ For more Informations or problems please sent email to ${config.AdministerEmail.
 
 module.exports.ResetMailEmail = ResetMailEmail;
 module.exports.CreateAccountEmail = CreateAccountEmail;
-module.exports.ActiveAccountEmail = ActiveAccountEmail;

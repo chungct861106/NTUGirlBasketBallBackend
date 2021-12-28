@@ -1,11 +1,10 @@
 const config = {};
 
-config.SECRET_KEY = "ntu-girl-basketball";
-config.ADMIN_LEVEL = { recorder: 1, team: 1, administer: 2 };
+config.SECRET_KEY = process.env.SECRET_KEY;
 
 config.AdministerEmail = {
-  user: "ntu.girlbasketball@gmail.com",
-  pass: "w96284sm3x06", // 台大女籃 (用英文打)
+  user: "shuosolab@gmail.com",
+  pass: process.env.SECRET_KEY,
 };
 
 module.exports = config;

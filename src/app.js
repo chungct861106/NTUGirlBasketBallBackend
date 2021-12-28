@@ -8,19 +8,7 @@ const path = require("path");
 require("dotenv-defaults").config();
 
 const app = express();
-
-`Log history to file`;
-// const fs = require("fs");
-// const accessLogStream = fs.createWriteStream(
-//   path.join(__dirname, "access.log"),
-//   {
-//     flags: "a+",
-//   }
-// );
-// app.use(logger("dev", { stream: accessLogStream }));
-
 app.use(logger("dev"));
-
 app.use(cors());
 app.use(express.json());
 

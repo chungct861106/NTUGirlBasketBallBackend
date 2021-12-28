@@ -1,25 +1,25 @@
 const express = require("express");
 const response = require("../modules/response");
-const Time = require("../models/Time");
+const Question = require("../models/Question");
 
 const router = express.Router();
 
-router.put("/team/appoint", async (req, res) => {
+router.post("/create", async (req, res) => {
+  const QuestionObj = req.body;
   const { token } = req.headers;
-  const { teamID, timeNumber } = req.body;
   try {
-    const result = await new Time(token).Appoint({ timeNumber, teamID });
+    const result = await new Question(token).Create(QuestionObj);
     return response.succ(res, result);
   } catch (err) {
     return response.fail(res, err);
   }
 });
 
-router.put("/recorder/appoint", async (req, res) => {
+router.post("/update", async (req, res) => {
+  const QuestionObj = req.body;
   const { token } = req.headers;
-  const { userID, timeNumber } = req.body;
   try {
-    const result = await new Time(token).Appoint({ timeNumber, userID });
+    const result = await new Question(token).Update(QuestionObj);
     return response.succ(res, result);
   } catch (err) {
     return response.fail(res, err);
@@ -28,36 +28,35 @@ router.put("/recorder/appoint", async (req, res) => {
 
 router.get("/data", async (req, res) => {
   const { token } = req.headers;
-  const { type } = req.query;
-  try {
-    const result = await new Time(token).GetTime(type);
+  const ReqInfo = req.query;
 
+  try {
+    const result = await new Question(token).GetData(ReqInfo);
     return response.succ(res, result);
   } catch (err) {
     return response.fail(res, err);
   }
 });
-
-router.get("/team", async (req, res) => {
+router.get("/reviews", async (req, res) => {
   const { token } = req.headers;
-  const { team_id } = req.query;
+
   try {
-    const result = await new Time(token).GetTimeById({ team_id });
+    const result = await new Question(token).GetAllData();
     return response.succ(res, result);
   } catch (err) {
     return response.fail(res, err);
   }
 });
 
-router.get("/recorder", async (req, res) => {
+router.delete("/delete", async (req, res) => {
   const { token } = req.headers;
-  const { user_id } = req.query;
+  const QuestionID = req.query.question_id;
+
   try {
-    const result = await new Time(token).GetTimeById({ user_id });
+    const result = await new Question(token).Delete(QuestionID);
     return response.succ(res, result);
   } catch (err) {
     return response.fail(res, err);
   }
 });
-
 module.exports = router;

@@ -6,10 +6,7 @@ const UserSchema = new Schema({
   id: {
     type: mongoose.Types.ObjectId,
   },
-  account: {
-    type: String,
-    required: [true, "Account is required."],
-  },
+
   password: {
     type: String,
     required: [true, "Password is required."],
@@ -18,14 +15,11 @@ const UserSchema = new Schema({
     type: String,
     required: [true, "Email is required."],
   },
-  admin: {
+  username: {
     type: String,
-    required: [true, "Adiminister Type is required."],
+    required: [true, "Username is required."],
   },
-  department: {
-    type: String,
-    required: [true, "Department is required."],
-  },
+
   active: {
     type: Boolean,
     default: false,
