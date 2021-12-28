@@ -17,7 +17,7 @@
     "@babel/preset-env": "^7.14.1",
     "dotenv-defaults": "^2.0.1",
     "mongoose": "^5.12.7",
-    "nodemon": "^2.0.7"
+    "nodemon": "^2.0.15"
   },
   "dependencies": {
     "async_hooks": "^1.0.0",
