@@ -161,7 +161,7 @@ User.prototype.Update = async function (updateObj) {
 
   const { username } = updateObj;
   const errors = [];
-  if (await UserValider.isUniqueName(username))
+  if (!(await UserValider.isUniqueName(username)))
     errors.push({
       name: "username",
       errors: ["名稱已註冊"],
