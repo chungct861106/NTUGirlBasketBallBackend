@@ -29,7 +29,7 @@ const CreateAccountEmail = async (userInfo, emailtoken) => {
     from: config.AdministerEmail.user,
     to: email,
     subject: "[說說Lab] 說說帳號已創建",
-    text: `歡應加入說說Lab，點選下方連結啟用說說帳號:\n localhost:3000/verify/${emailtoken}`,
+    text: `歡應加入說說Lab，點選下方連結啟用說說帳號:\n https://shousolab-game.herokuapp.com/verify/${emailtoken}`,
   };
 
   await transporter.sendMail(mailOptions, function (error, info) {
